@@ -1,0 +1,6 @@
+{
+  "name": "Casting Coffee",
+  "description": "We Don't Just Roast. We Cast. 전 세계의 원두와 아티스트, K-POP의 에너지가 만나는 프리미엄 커피 플랫폼 캐스팅커피",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
