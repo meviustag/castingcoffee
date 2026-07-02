@@ -3,14 +3,24 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import { STORIES } from '../data';
 
-export default function PhilosophySection() {
+interface PhilosophySectionProps {
+  philosophyImage1?: string;
+  philosophyImage2?: string;
+  philosophyImage3?: string;
+}
+
+export default function PhilosophySection({
+  philosophyImage1,
+  philosophyImage2,
+  philosophyImage3,
+}: PhilosophySectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   // High quality images for the 3 stages
   const philosophyImages = [
-    'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80', // origin
-    'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80', // roasting point
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80'  // people/artists
+    philosophyImage1 || 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80', // origin
+    philosophyImage2 || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80', // roasting point
+    philosophyImage3 || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80'  // people/artists
   ];
 
   const icons = [

@@ -19,6 +19,27 @@ interface AdminPanelProps {
   onUpdateBrand: (l1: string, l2: string) => void;
   onUpdateHero: (badge: string, title: string, subtitle: string, desc: string, image: string) => void;
   onUpdateContact: (phone: string, b2b: string, collab: string) => void;
+  hqName: string;
+  hqAddress: string;
+  hqContact: string;
+  hqHours: string;
+  hqMapImage: string;
+  roasteryName: string;
+  roasteryAddress: string;
+  roasteryContact: string;
+  roasteryHours: string;
+  roasteryMapImage: string;
+  onUpdateContactLocations: (
+    hqN: string, hqA: string, hqC: string, hqH: string, hqM: string,
+    roasteryN: string, roasteryA: string, roasteryC: string, roasteryH: string, roasteryM: string
+  ) => void;
+  teaserImage: string;
+  philosophyImage1: string;
+  philosophyImage2: string;
+  philosophyImage3: string;
+  onUpdateLayoutImages: (
+    teaser: string, phil1: string, phil2: string, phil3: string
+  ) => void;
   products: Product[];
   onUpdateProducts: (products: Product[]) => void;
   artists: ArtistIP[];
@@ -63,6 +84,22 @@ export default function AdminPanel({
   onUpdateBrand,
   onUpdateHero,
   onUpdateContact,
+  hqName,
+  hqAddress,
+  hqContact,
+  hqHours,
+  hqMapImage,
+  roasteryName,
+  roasteryAddress,
+  roasteryContact,
+  roasteryHours,
+  roasteryMapImage,
+  onUpdateContactLocations,
+  teaserImage,
+  philosophyImage1,
+  philosophyImage2,
+  philosophyImage3,
+  onUpdateLayoutImages,
   products,
   onUpdateProducts,
   artists,
@@ -85,6 +122,26 @@ export default function AdminPanel({
   const [localContactPhone, setLocalContactPhone] = useState(contactPhone);
   const [localContactB2bEmail, setLocalContactB2bEmail] = useState(contactB2bEmail);
   const [localContactCollabEmail, setLocalContactCollabEmail] = useState(contactCollabEmail);
+
+  // Tab 1: Headquarters Details local states
+  const [localHqName, setLocalHqName] = useState(hqName);
+  const [localHqAddress, setLocalHqAddress] = useState(hqAddress);
+  const [localHqContact, setLocalHqContact] = useState(hqContact);
+  const [localHqHours, setLocalHqHours] = useState(hqHours);
+  const [localHqMapImage, setLocalHqMapImage] = useState(hqMapImage);
+
+  // Tab 1: Roastery Details local states
+  const [localRoasteryName, setLocalRoasteryName] = useState(roasteryName);
+  const [localRoasteryAddress, setLocalRoasteryAddress] = useState(roasteryAddress);
+  const [localRoasteryContact, setLocalRoasteryContact] = useState(roasteryContact);
+  const [localRoasteryHours, setLocalRoasteryHours] = useState(roasteryHours);
+  const [localRoasteryMapImage, setLocalRoasteryMapImage] = useState(roasteryMapImage);
+
+  // Tab 1: General layout/showcase images
+  const [localTeaserImage, setLocalTeaserImage] = useState(teaserImage);
+  const [localPhilosophyImage1, setLocalPhilosophyImage1] = useState(philosophyImage1);
+  const [localPhilosophyImage2, setLocalPhilosophyImage2] = useState(philosophyImage2);
+  const [localPhilosophyImage3, setLocalPhilosophyImage3] = useState(philosophyImage3);
 
   // Tab 2: Product local states
   const [selectedProductId, setSelectedProductId] = useState<string>('');
@@ -119,7 +176,30 @@ export default function AdminPanel({
     setLocalContactPhone(contactPhone);
     setLocalContactB2bEmail(contactB2bEmail);
     setLocalContactCollabEmail(contactCollabEmail);
-  }, [brandName1, brandName2, heroBadge, heroTitle, heroSubtitle, heroDesc, heroImage, contactPhone, contactB2bEmail, contactCollabEmail]);
+
+    setLocalHqName(hqName);
+    setLocalHqAddress(hqAddress);
+    setLocalHqContact(hqContact);
+    setLocalHqHours(hqHours);
+    setLocalHqMapImage(hqMapImage);
+
+    setLocalRoasteryName(roasteryName);
+    setLocalRoasteryAddress(roasteryAddress);
+    setLocalRoasteryContact(roasteryContact);
+    setLocalRoasteryHours(roasteryHours);
+    setLocalRoasteryMapImage(roasteryMapImage);
+
+    setLocalTeaserImage(teaserImage);
+    setLocalPhilosophyImage1(philosophyImage1);
+    setLocalPhilosophyImage2(philosophyImage2);
+    setLocalPhilosophyImage3(philosophyImage3);
+  }, [
+    brandName1, brandName2, heroBadge, heroTitle, heroSubtitle, heroDesc, heroImage,
+    contactPhone, contactB2bEmail, contactCollabEmail,
+    hqName, hqAddress, hqContact, hqHours, hqMapImage,
+    roasteryName, roasteryAddress, roasteryContact, roasteryHours, roasteryMapImage,
+    teaserImage, philosophyImage1, philosophyImage2, philosophyImage3
+  ]);
 
   // Handle product selection change
   useEffect(() => {
@@ -174,7 +254,25 @@ export default function AdminPanel({
       localContactB2bEmail.trim(),
       localContactCollabEmail.trim()
     );
-    onShowNotification('상호명, 메인 타이틀 및 고객문의 정보가 성공적으로 반영되었습니다.');
+    onUpdateContactLocations(
+      localHqName.trim(),
+      localHqAddress.trim(),
+      localHqContact.trim(),
+      localHqHours.trim(),
+      localHqMapImage.trim(),
+      localRoasteryName.trim(),
+      localRoasteryAddress.trim(),
+      localRoasteryContact.trim(),
+      localRoasteryHours.trim(),
+      localRoasteryMapImage.trim()
+    );
+    onUpdateLayoutImages(
+      localTeaserImage.trim(),
+      localPhilosophyImage1.trim(),
+      localPhilosophyImage2.trim(),
+      localPhilosophyImage3.trim()
+    );
+    onShowNotification('상호명, 타이틀, 고객문의, 지점 주소 및 모든 레이아웃 이미지 정보가 성공적으로 반영되었습니다.');
   };
 
   const handleSaveProduct = () => {
@@ -451,7 +549,7 @@ export default function AdminPanel({
                       </div>
                     </div>
 
-                    {/* 03 / 고객문의 정보 변경 (Business Inquiries Settings) */}
+                    {/* 03 / 고객 및 제휴 문의처 변경 (Business Inquiries Settings) */}
                     <div className="space-y-4 pt-4 border-t border-[#EBE8E2]">
                       <h3 className="font-sans font-black text-sm tracking-tight text-[#1C1A17] border-b border-[#EBE8E2] pb-1.5 uppercase">
                         03 / 고객 및 제휴 문의처 변경 (Business Inquiries)
@@ -489,11 +587,216 @@ export default function AdminPanel({
                         </div>
                       </div>
                     </div>
+
+                    {/* 04 / 본사 및 로스터리 상세 주소 변경 (HQ & Roastery Settings) */}
+                    <div className="space-y-4 pt-4 border-t border-[#EBE8E2]">
+                      <h3 className="font-sans font-black text-sm tracking-tight text-[#1C1A17] border-b border-[#EBE8E2] pb-1.5 uppercase">
+                        04 / 본사 및 로스터리 상세 주소 변경 (HQ & Roastery Coordinates)
+                      </h3>
+                      
+                      {/* Headquarters */}
+                      <div className="p-3 bg-[#F8FAFD] border border-[#EBE8E2] space-y-3">
+                        <span className="font-mono text-[9px] font-black text-[#FF5C00] tracking-widest uppercase block">04-A / HEADQUARTER (본사 스튜디오)</span>
+                        <div className="space-y-2">
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">본사 명칭</label>
+                            <input
+                              type="text"
+                              value={localHqName}
+                              onChange={(e) => setLocalHqName(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">본사 도로명 주소</label>
+                            <input
+                              type="text"
+                              value={localHqAddress}
+                              onChange={(e) => setLocalHqAddress(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">본사 연락처 / 이메일</label>
+                            <input
+                              type="text"
+                              value={localHqContact}
+                              onChange={(e) => setLocalHqContact(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">본사 오픈/운영 시간</label>
+                            <input
+                              type="text"
+                              value={localHqHours}
+                              onChange={(e) => setLocalHqHours(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">본사 약도 이미지 주소 (HQ Map/Image URL)</label>
+                            <input
+                              type="text"
+                              value={localHqMapImage}
+                              onChange={(e) => setLocalHqMapImage(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs font-mono bg-white focus:outline-none focus:border-[#FF5C00]"
+                              placeholder="https://..."
+                            />
+                            {localHqMapImage && (
+                              <div className="h-20 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                                <img src={localHqMapImage} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" alt="HQ map preview" referrerPolicy="no-referrer" />
+                                <span className="absolute bottom-1 right-1 bg-[#1C1A17]/80 text-white font-mono text-[8px] px-1.5 py-0.5 uppercase">HQ 약도 프리뷰</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Roastery */}
+                      <div className="p-3 bg-[#F8FAFD] border border-[#EBE8E2] space-y-3">
+                        <span className="font-mono text-[9px] font-black text-[#FF5C00] tracking-widest uppercase block">04-B / TECHNICAL FACTORY (로스터리 공장)</span>
+                        <div className="space-y-2">
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">로스터리 명칭</label>
+                            <input
+                              type="text"
+                              value={localRoasteryName}
+                              onChange={(e) => setLocalRoasteryName(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">로스터리 도로명 주소</label>
+                            <input
+                              type="text"
+                              value={localRoasteryAddress}
+                              onChange={(e) => setLocalRoasteryAddress(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">로스터리 연락처 / 이메일</label>
+                            <input
+                              type="text"
+                              value={localRoasteryContact}
+                              onChange={(e) => setLocalRoasteryContact(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">로스터리 오픈/운영 시간</label>
+                            <input
+                              type="text"
+                              value={localRoasteryHours}
+                              onChange={(e) => setLocalRoasteryHours(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs bg-white focus:outline-none focus:border-[#FF5C00]"
+                            />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="font-sans font-bold text-[10px] text-[#5C564E] block">로스터리 약도 이미지 주소 (Roastery Map/Image URL)</label>
+                            <input
+                              type="text"
+                              value={localRoasteryMapImage}
+                              onChange={(e) => setLocalRoasteryMapImage(e.target.value)}
+                              className="w-full px-2.5 py-1.5 border border-[#EBE8E2] text-xs font-mono bg-white focus:outline-none focus:border-[#FF5C00]"
+                              placeholder="https://..."
+                            />
+                            {localRoasteryMapImage && (
+                              <div className="h-20 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                                <img src={localRoasteryMapImage} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" alt="Roastery map preview" referrerPolicy="no-referrer" />
+                                <span className="absolute bottom-1 right-1 bg-[#1C1A17]/80 text-white font-mono text-[8px] px-1.5 py-0.5 uppercase">Roastery 약도 프리뷰</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 05 / 홈페이지 내 레이아웃 및 갤러리 이미지 변경 (Global Layout Images) */}
+                    <div className="space-y-4 pt-4 border-t border-[#EBE8E2]">
+                      <h3 className="font-sans font-black text-sm tracking-tight text-[#1C1A17] border-b border-[#EBE8E2] pb-1.5 uppercase">
+                        05 / 홈페이지 내 레이아웃 및 브랜드 갤러리 이미지 변경
+                      </h3>
+                      <p className="font-sans text-[11px] text-neutral-500 leading-normal">
+                        K-POP 리그 홍보관 배너 및 브랜드 스토리 탭의 에센스 이미지 3종을 실시간으로 커스텀 고화질 주소로 변경하여 완전히 다른 무드의 웹페이지를 기획할 수 있습니다.
+                      </p>
+
+                      <div className="grid grid-cols-1 gap-4">
+                        {/* K-POP Showcase Teaser */}
+                        <div className="space-y-1.5">
+                          <label className="font-sans font-bold text-xs text-[#5C564E] block">K-POP 리그 쇼케이스 대표 티저 이미지 (Stage Teaser Image)</label>
+                          <input
+                            type="text"
+                            value={localTeaserImage}
+                            onChange={(e) => setLocalTeaserImage(e.target.value)}
+                            className="w-full px-3 py-2 border border-[#EBE8E2] text-xs font-mono bg-[#F8FAFD] focus:outline-none focus:border-[#FF5C00] focus:bg-white"
+                          />
+                          {localTeaserImage && (
+                            <div className="h-24 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                              <img src={localTeaserImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Teaser preview" referrerPolicy="no-referrer" />
+                              <span className="absolute bottom-1.5 right-1.5 bg-[#FF5C00] text-white font-sans text-[8px] px-2 py-0.5 font-bold uppercase">K-POP Teaser Preview</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Story/Philosophy Image 1 */}
+                        <div className="space-y-1.5">
+                          <label className="font-sans font-bold text-xs text-[#5C564E] block">브랜드 스토리 갤러리 이미지 1 (Stage 01: 수확 & 산지)</label>
+                          <input
+                            type="text"
+                            value={localPhilosophyImage1}
+                            onChange={(e) => setLocalPhilosophyImage1(e.target.value)}
+                            className="w-full px-3 py-2 border border-[#EBE8E2] text-xs font-mono bg-[#F8FAFD] focus:outline-none focus:border-[#FF5C00] focus:bg-white"
+                          />
+                          {localPhilosophyImage1 && (
+                            <div className="h-24 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                              <img src={localPhilosophyImage1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Philosophy 1 preview" referrerPolicy="no-referrer" />
+                              <span className="absolute bottom-1.5 right-1.5 bg-[#1C1A17] text-white font-sans text-[8px] px-2 py-0.5 font-bold uppercase">Story Image 1 Preview</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Story/Philosophy Image 2 */}
+                        <div className="space-y-1.5">
+                          <label className="font-sans font-bold text-xs text-[#5C564E] block">브랜드 스토리 갤러리 이미지 2 (Stage 02: 테스팅 & 로스팅)</label>
+                          <input
+                            type="text"
+                            value={localPhilosophyImage2}
+                            onChange={(e) => setLocalPhilosophyImage2(e.target.value)}
+                            className="w-full px-3 py-2 border border-[#EBE8E2] text-xs font-mono bg-[#F8FAFD] focus:outline-none focus:border-[#FF5C00] focus:bg-white"
+                          />
+                          {localPhilosophyImage2 && (
+                            <div className="h-24 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                              <img src={localPhilosophyImage2} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Philosophy 2 preview" referrerPolicy="no-referrer" />
+                              <span className="absolute bottom-1.5 right-1.5 bg-[#1C1A17] text-white font-sans text-[8px] px-2 py-0.5 font-bold uppercase">Story Image 2 Preview</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Story/Philosophy Image 3 */}
+                        <div className="space-y-1.5">
+                          <label className="font-sans font-bold text-xs text-[#5C564E] block">브랜드 스토리 갤러리 이미지 3 (Stage 03: 콜라보 & 플레이)</label>
+                          <input
+                            type="text"
+                            value={localPhilosophyImage3}
+                            onChange={(e) => setLocalPhilosophyImage3(e.target.value)}
+                            className="w-full px-3 py-2 border border-[#EBE8E2] text-xs font-mono bg-[#F8FAFD] focus:outline-none focus:border-[#FF5C00] focus:bg-white"
+                          />
+                          {localPhilosophyImage3 && (
+                            <div className="h-24 w-full overflow-hidden border border-[#EBE8E2] bg-gray-100 relative group">
+                              <img src={localPhilosophyImage3} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Philosophy 3 preview" referrerPolicy="no-referrer" />
+                              <span className="absolute bottom-1.5 right-1.5 bg-[#1C1A17] text-white font-sans text-[8px] px-2 py-0.5 font-bold uppercase">Story Image 3 Preview</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <button
                     onClick={handleSaveBrandAndHero}
-                    className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E05200] text-white font-sans font-black text-xs tracking-widest transition-colors flex items-center justify-center space-x-1.5"
+                    className="w-full py-3.5 bg-[#FF5C00] hover:bg-[#E05200] text-white font-sans font-black text-xs tracking-widest transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
                     <Check className="w-4 h-4" />
                     <span>상호 및 메인 정보 적용하기</span>

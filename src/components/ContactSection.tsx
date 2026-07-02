@@ -8,7 +8,33 @@ interface ContactSectionProps {
   onShowNotification: (message: string) => void;
 }
 
-export default function ContactSection({ onShowNotification }: ContactSectionProps) {
+interface ContactSectionProps {
+  onShowNotification: (message: string) => void;
+  hqName?: string;
+  hqAddress?: string;
+  hqContact?: string;
+  hqHours?: string;
+  hqMapImage?: string;
+  roasteryName?: string;
+  roasteryAddress?: string;
+  roasteryContact?: string;
+  roasteryHours?: string;
+  roasteryMapImage?: string;
+}
+
+export default function ContactSection({
+  onShowNotification,
+  hqName = '캐스팅커피 크리에이티브 스튜디오',
+  hqAddress = '서울특별시 성동구 아차산로 17길 49, 3층',
+  hqContact = '02-543-1202 | contact@castingcoffee.com',
+  hqHours = 'MON - FRI : 09:00 - 18:00 (WEEKENDS CLOSED)',
+  hqMapImage = '',
+  roasteryName = '캐스팅커피 테크니컬 스마트 팩토리',
+  roasteryAddress = '경기도 남양주시 화도읍 수레로 112번길 18',
+  roasteryContact = '031-591-1203 | roastery@castingcoffee.com',
+  roasteryHours = 'MON - SAT : 08:00 - 17:00 (SUNDAY CLOSED)',
+  roasteryMapImage = '',
+}: ContactSectionProps) {
   const [formData, setFormData] = useState<InquiryFormData>({
     name: '',
     companyName: '',
@@ -63,17 +89,19 @@ export default function ContactSection({ onShowNotification }: ContactSectionPro
   const officeLocations = [
     {
       role: 'HEADQUARTERS (본사)',
-      name: '캐스팅커피 크리에이티브 스튜디오',
-      address: '서울특별시 성동구 아차산로 17길 49, 3층',
-      contact: '02-543-1202 | contact@castingcoffee.com',
-      hours: 'MON - FRI : 09:00 - 18:00 (WEEKENDS CLOSED)',
+      name: hqName,
+      address: hqAddress,
+      contact: hqContact,
+      hours: hqHours,
+      mapImage: hqMapImage,
     },
     {
       role: 'SMART ROASTING HUB (로스터리)',
-      name: '캐스팅커피 테크니컬 스마트 팩토리',
-      address: '경기도 남양주시 화도읍 수레로 112번길 18',
-      contact: '031-591-1203 | roastery@castingcoffee.com',
-      hours: 'MON - SAT : 08:00 - 17:00 (SUNDAY CLOSED)',
+      name: roasteryName,
+      address: roasteryAddress,
+      contact: roasteryContact,
+      hours: roasteryHours,
+      mapImage: roasteryMapImage,
     }
   ];
 
@@ -299,15 +327,29 @@ export default function ContactSection({ onShowNotification }: ContactSectionPro
                   </div>
                 </div>
 
-                {/* Styled static placeholder map representation */}
-                <div className="h-28 w-full bg-[#F8FAFD] border border-[#EBE8E2] relative overflow-hidden mt-4 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#EBE8E2_1px,transparent_1px),linear-gradient(to_bottom,#EBE8E2_1px,transparent_1px)] bg-[size:10px_10px] opacity-20" />
-                  <div className="w-4 h-4 rounded-full bg-[#FF5C00]/20 flex items-center justify-center border border-[#FF5C00] relative">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-ping absolute" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
+                {/* Styled static placeholder map representation or custom map/location image */}
+                {loc.mapImage ? (
+                  <div className="h-36 w-full border border-[#EBE8E2] relative overflow-hidden mt-4 group">
+                    <img
+                      src={loc.mapImage}
+                      alt={`${loc.name} Location Guide`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute top-2 left-2 bg-[#1C1A17]/80 backdrop-blur-sm text-white font-mono text-[8px] px-2 py-0.5 tracking-wider uppercase">
+                      MAP GUIDE IMAGE
+                    </div>
                   </div>
-                  <span className="font-mono text-[9px] font-bold text-[#8C8375] absolute bottom-2 right-2">GPS SIGNAL LOCKED</span>
-                </div>
+                ) : (
+                  <div className="h-28 w-full bg-[#F8FAFD] border border-[#EBE8E2] relative overflow-hidden mt-4 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#EBE8E2_1px,transparent_1px),linear-gradient(to_bottom,#EBE8E2_1px,transparent_1px)] bg-[size:10px_10px] opacity-20" />
+                    <div className="w-4 h-4 rounded-full bg-[#FF5C00]/20 flex items-center justify-center border border-[#FF5C00] relative">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-ping absolute" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
+                    </div>
+                    <span className="font-mono text-[9px] font-bold text-[#8C8375] absolute bottom-2 right-2">GPS SIGNAL LOCKED</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>

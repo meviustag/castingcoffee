@@ -44,6 +44,26 @@ export default function App() {
   const [contactB2bEmail, setContactB2bEmail] = useState<string>(() => localStorage.getItem('casting_contact_b2b_email') || 'b2b@castingcoffee.com');
   const [contactCollabEmail, setContactCollabEmail] = useState<string>(() => localStorage.getItem('casting_contact_collab_email') || 'collaboration@castingcoffee.com');
 
+  // HQ Address Details
+  const [hqName, setHqName] = useState<string>(() => localStorage.getItem('casting_hq_name') || '캐스팅커피 크리에이티브 스튜디오');
+  const [hqAddress, setHqAddress] = useState<string>(() => localStorage.getItem('casting_hq_address') || '서울특별시 성동구 아차산로 17길 49, 3층');
+  const [hqContact, setHqContact] = useState<string>(() => localStorage.getItem('casting_hq_contact') || '02-543-1202 | contact@castingcoffee.com');
+  const [hqHours, setHqHours] = useState<string>(() => localStorage.getItem('casting_hq_hours') || 'MON - FRI : 09:00 - 18:00 (WEEKENDS CLOSED)');
+  const [hqMapImage, setHqMapImage] = useState<string>(() => localStorage.getItem('casting_hq_map_image') || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80');
+
+  // Roastery Address Details
+  const [roasteryName, setRoasteryName] = useState<string>(() => localStorage.getItem('casting_roastery_name') || '캐스팅커피 테크니컬 스마트 팩토리');
+  const [roasteryAddress, setRoasteryAddress] = useState<string>(() => localStorage.getItem('casting_roastery_address') || '경기도 남양주시 화도읍 수레로 112번길 18');
+  const [roasteryContact, setRoasteryContact] = useState<string>(() => localStorage.getItem('casting_roastery_contact') || '031-591-1203 | roastery@castingcoffee.com');
+  const [roasteryHours, setRoasteryHours] = useState<string>(() => localStorage.getItem('casting_roastery_hours') || 'MON - SAT : 08:00 - 17:00 (SUNDAY CLOSED)');
+  const [roasteryMapImage, setRoasteryMapImage] = useState<string>(() => localStorage.getItem('casting_roastery_map_image') || 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80');
+
+  // Layout Showcase & Story Images
+  const [teaserImage, setTeaserImage] = useState<string>(() => localStorage.getItem('casting_teaser_image') || 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80');
+  const [philosophyImage1, setPhilosophyImage1] = useState<string>(() => localStorage.getItem('casting_phil_image_1') || 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80');
+  const [philosophyImage2, setPhilosophyImage2] = useState<string>(() => localStorage.getItem('casting_phil_image_2') || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80');
+  const [philosophyImage3, setPhilosophyImage3] = useState<string>(() => localStorage.getItem('casting_phil_image_3') || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80');
+
   const [products, setProducts] = useState<Product[]>(() => {
     const saved = localStorage.getItem('casting_products');
     return saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
@@ -109,6 +129,49 @@ export default function App() {
     localStorage.setItem('casting_contact_collab_email', collab);
   };
 
+  const handleUpdateContactLocations = (
+    hqN: string, hqA: string, hqC: string, hqH: string, hqM: string,
+    roasteryN: string, roasteryA: string, roasteryC: string, roasteryH: string, roasteryM: string
+  ) => {
+    setHqName(hqN);
+    setHqAddress(hqA);
+    setHqContact(hqC);
+    setHqHours(hqH);
+    setHqMapImage(hqM);
+
+    setRoasteryName(roasteryN);
+    setRoasteryAddress(roasteryA);
+    setRoasteryContact(roasteryC);
+    setRoasteryHours(roasteryH);
+    setRoasteryMapImage(roasteryM);
+
+    localStorage.setItem('casting_hq_name', hqN);
+    localStorage.setItem('casting_hq_address', hqA);
+    localStorage.setItem('casting_hq_contact', hqC);
+    localStorage.setItem('casting_hq_hours', hqH);
+    localStorage.setItem('casting_hq_map_image', hqM);
+
+    localStorage.setItem('casting_roastery_name', roasteryN);
+    localStorage.setItem('casting_roastery_address', roasteryA);
+    localStorage.setItem('casting_roastery_contact', roasteryC);
+    localStorage.setItem('casting_roastery_hours', roasteryH);
+    localStorage.setItem('casting_roastery_map_image', roasteryM);
+  };
+
+  const handleUpdateLayoutImages = (
+    teaser: string, phil1: string, phil2: string, phil3: string
+  ) => {
+    setTeaserImage(teaser);
+    setPhilosophyImage1(phil1);
+    setPhilosophyImage2(phil2);
+    setPhilosophyImage3(phil3);
+
+    localStorage.setItem('casting_teaser_image', teaser);
+    localStorage.setItem('casting_phil_image_1', phil1);
+    localStorage.setItem('casting_phil_image_2', phil2);
+    localStorage.setItem('casting_phil_image_3', phil3);
+  };
+
   const handleUpdateProducts = (updatedProducts: Product[]) => {
     setProducts(updatedProducts);
     localStorage.setItem('casting_products', JSON.stringify(updatedProducts));
@@ -130,6 +193,20 @@ export default function App() {
     localStorage.removeItem('casting_contact_phone');
     localStorage.removeItem('casting_contact_b2b_email');
     localStorage.removeItem('casting_contact_collab_email');
+    localStorage.removeItem('casting_hq_name');
+    localStorage.removeItem('casting_hq_address');
+    localStorage.removeItem('casting_hq_contact');
+    localStorage.removeItem('casting_hq_hours');
+    localStorage.removeItem('casting_hq_map_image');
+    localStorage.removeItem('casting_roastery_name');
+    localStorage.removeItem('casting_roastery_address');
+    localStorage.removeItem('casting_roastery_contact');
+    localStorage.removeItem('casting_roastery_hours');
+    localStorage.removeItem('casting_roastery_map_image');
+    localStorage.removeItem('casting_teaser_image');
+    localStorage.removeItem('casting_phil_image_1');
+    localStorage.removeItem('casting_phil_image_2');
+    localStorage.removeItem('casting_phil_image_3');
     localStorage.removeItem('casting_products');
     localStorage.removeItem('casting_artists');
 
@@ -143,6 +220,24 @@ export default function App() {
     setContactPhone('02-543-1202 | 평일 09:30 - 18:00');
     setContactB2bEmail('b2b@castingcoffee.com');
     setContactCollabEmail('collaboration@castingcoffee.com');
+
+    setHqName('캐스팅커피 크리에이티브 스튜디오');
+    setHqAddress('서울특별시 성동구 아차산로 17길 49, 3층');
+    setHqContact('02-543-1202 | contact@castingcoffee.com');
+    setHqHours('MON - FRI : 09:00 - 18:00 (WEEKENDS CLOSED)');
+    setHqMapImage('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80');
+
+    setRoasteryName('캐스팅커피 테크니컬 스마트 팩토리');
+    setRoasteryAddress('경기도 남양주시 화도읍 수레로 112번길 18');
+    setRoasteryContact('031-591-1203 | roastery@castingcoffee.com');
+    setRoasteryHours('MON - SAT : 08:00 - 17:00 (SUNDAY CLOSED)');
+    setRoasteryMapImage('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80');
+
+    setTeaserImage('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80');
+    setPhilosophyImage1('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80');
+    setPhilosophyImage2('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80');
+    setPhilosophyImage3('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80');
+
     setProducts(DEFAULT_PRODUCTS);
     setArtists(DEFAULT_ARTISTS);
 
@@ -233,7 +328,11 @@ export default function App() {
               />
 
               {/* Section 2: Core Concept Brand Philosophy */}
-              <PhilosophySection />
+              <PhilosophySection
+                philosophyImage1={philosophyImage1}
+                philosophyImage2={philosophyImage2}
+                philosophyImage3={philosophyImage3}
+              />
 
               {/* Section 3: Four Editions Product Category Grid (Embedded Layout) */}
               <ShopGrid
@@ -275,7 +374,7 @@ export default function App() {
                     <div className="relative aspect-[16/10] w-full max-w-lg bg-[#FAF9F6] border border-[#EBE8E2] overflow-hidden p-6 group">
                       <div className="absolute inset-0 bg-gradient-to-tr from-neutral-900/60 to-transparent z-10" />
                       <img
-                        src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80"
+                        src={teaserImage}
                         alt="K-POP League Dynamic stage representation"
                         className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 contrast-115 transition-transform duration-700 group-hover:scale-105"
                         referrerPolicy="no-referrer"
@@ -324,7 +423,11 @@ export default function App() {
               className="space-y-12"
             >
               {/* Philosophy Overview */}
-              <PhilosophySection />
+              <PhilosophySection
+                philosophyImage1={philosophyImage1}
+                philosophyImage2={philosophyImage2}
+                philosophyImage3={philosophyImage3}
+              />
 
               {/* Rich Narrative / Timeline explaining "Casting" and Expert customization vision */}
               <section className="bg-white py-16 md:py-24">
@@ -415,7 +518,19 @@ export default function App() {
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.35 }}
             >
-              <ContactSection onShowNotification={triggerNotification} />
+              <ContactSection
+                onShowNotification={triggerNotification}
+                hqName={hqName}
+                hqAddress={hqAddress}
+                hqContact={hqContact}
+                hqHours={hqHours}
+                hqMapImage={hqMapImage}
+                roasteryName={roasteryName}
+                roasteryAddress={roasteryAddress}
+                roasteryContact={roasteryContact}
+                roasteryHours={roasteryHours}
+                roasteryMapImage={roasteryMapImage}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -530,6 +645,22 @@ export default function App() {
         onUpdateBrand={handleUpdateBrand}
         onUpdateHero={handleUpdateHero}
         onUpdateContact={handleUpdateContact}
+        hqName={hqName}
+        hqAddress={hqAddress}
+        hqContact={hqContact}
+        hqHours={hqHours}
+        hqMapImage={hqMapImage}
+        roasteryName={roasteryName}
+        roasteryAddress={roasteryAddress}
+        roasteryContact={roasteryContact}
+        roasteryHours={roasteryHours}
+        roasteryMapImage={roasteryMapImage}
+        onUpdateContactLocations={handleUpdateContactLocations}
+        teaserImage={teaserImage}
+        philosophyImage1={philosophyImage1}
+        philosophyImage2={philosophyImage2}
+        philosophyImage3={philosophyImage3}
+        onUpdateLayoutImages={handleUpdateLayoutImages}
         products={products}
         onUpdateProducts={handleUpdateProducts}
         artists={artists}
